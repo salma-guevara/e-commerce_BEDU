@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/eCommerce_BEDU.iml" filepath="$PROJECT_DIR$/eCommerce_BEDU.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/e-commerce_BEDU.iml" filepath="$PROJECT_DIR$/.idea/e-commerce_BEDU.iml" />
     </modules>
   </component>
 </project>

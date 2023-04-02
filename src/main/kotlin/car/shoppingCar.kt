@@ -1,17 +1,16 @@
 package car
-
-import product.Product
+import product.*
 
 class shoppingCar {
 
-    private var productos : MutableList<Product> = mutableListOf()
+    private var productos : MutableList<Producto> = mutableListOf()
 
 
-    fun agregarProducto(articulo: Product){
+    fun agregarProducto(articulo: Producto){
         productos?.add(articulo)
     }
 
-    fun verProductos(): MutableList<Product>? {
+    fun verProductos(): MutableList<Producto>? {
         return productos
     }
 

@@ -1,5 +1,3 @@
-package user
-
 class User(){
     lateinit var name: String
     lateinit var lastName: String

@@ -1,8 +1,7 @@
 package car
 
-import product.Product
-import user.Login
-import user.User
+import product.*
+import user.*
 
 class addToCar {
     companion object{
@@ -18,12 +17,13 @@ class addToCar {
         when (readln().toInt()) {
             1 -> {
                 val car = shoppingCar()
-                val producto1 = Product(1,"Celular",20000.00,"Equipo celular de última generación")
-                val producto2 = Product(2,"Figura de acción",800.00,"Figura de acción de plástico")
-                val producto3 = Product(3,"Pantalones",20000.00,"Equipo celular de última generación")
-                val producto4 = Product(4,"Celular",20000.00,"Equipo celular de última generación")
-                val producto5 = Product(5,"Celular",20000.00,"Equipo celular de última generación")
-                val lista = mapOf<Int,Product>(
+
+                val producto1 = Producto(1,"Celular",20000.00,"Equipo celular de última generación",10)
+                val producto2 = Producto(2,"Figura de acción",800.00,"Figura de acción de plástico",9)
+                val producto3 = Producto(3,"Pantalones",20000.00,"Equipo celular de última generación",8)
+                val producto4 = Producto(4,"Celular",20000.00,"Equipo celular de última generación",7)
+                val producto5 = Producto(5,"Celular",20000.00,"Equipo celular de última generación",6)
+                val lista = mapOf<Int,Producto>(
                     1 to producto1,
                     2 to producto2,
                     3 to producto3,
@@ -47,7 +47,7 @@ class addToCar {
                     }while ( validacion != 0)
                     val tarticulos = car.verProductos()?.size?.minus(1)
                     for (i in 0..tarticulos!!){
-                        total += car.verProductos()!!.get(i).price
+                        total += car.verProductos()!!.get(i).precio
                     }
                     println("Tienes un total de ${car.verProductos()?.size} articulos y un subtotal a pagar de $${total}")
                 }catch (ex: Exception){

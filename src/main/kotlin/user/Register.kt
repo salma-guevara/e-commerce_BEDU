@@ -1,6 +1,6 @@
 package user
 
-//import User.Login
+import User
 
 class Register {
     companion object{
