@@ -1,7 +1,7 @@
 package user
 
 import car.addToCar
-import product.Product
+import product.Inventario
 
 class Login {
     fun login(email: String, password: String, name: String){
@@ -24,20 +24,127 @@ class Login {
 
                 when (readln().toInt()) {
                     1 -> {
-                        //Agregar funcionalidad
-                        println("Lista de productos")
-                        val producto1 = Product(1,"Celular",20000.00,"Equipo celular de última generación")
-                        val producto2 = Product(2,"Figura de acción",800.00,"Figura de acción de plástico")
-                        val producto3 = Product(3,"Pantalones",20000.00,"Equipo celular de última generación")
-                        val producto4 = Product(4,"Celular",20000.00,"Equipo celular de última generación")
-                        val producto5 = Product(5,"Celular",20000.00,"Equipo celular de última generación")
-                        println("SKU: ${producto1.id} ${producto1.name}  :$ ${producto1.price}" )
-                        println("SKU: ${producto2.id} ${producto2.name}  :$ ${producto2.price}")
-                        println("SKU: ${producto3.id} ${producto3.name}  :$ ${producto3.price}")
-                        println("SKU: ${producto4.id} ${producto4.name}  :$ ${producto4.price}")
-                        println("SKU: ${producto5.id} ${producto5.name}  :$ ${producto5.price}")
 
-                        addToCar().agregaralCarro()
+                        val inventario = Inventario()
+
+                        inventario.agregarProducto("Producto 1", 10.10, "cat1", 20)
+                        inventario.agregarProducto("Producto 2", 5.50, "cat2", 10)
+                        inventario.agregarProducto("Producto 3", 4.40, "cat3", 5)
+                        inventario.agregarProducto("Producto 4", 2.20, "cat4", 0)
+
+                        println("Por favor presiona 1 si quieres entrar al sistema de Inventario " +
+                                "o 2 si quieres ir " +
+                                "directamente al Carrito de Compra")
+                        var verificacion = readLine()?.toIntOrNull()
+                        if (verificacion != null) {
+                            if (verificacion < 1 || verificacion > 2) {
+
+                                println("No es una respuesta valida elige otra vez")
+                                verificacion = readLine()?.toIntOrNull()
+                            }
+                        }
+                        while (verificacion == 1) {
+                            println("Bienvenid@ al Sistema del Inventario")
+                            println("Selecciona una acción:")
+                            println("1. Agregar un producto")
+                            println("2. Eliminar un producto")
+                            println("3. Buscar un producto por ID")
+                            println("4. Buscar un producto por nombre")
+                            println("5. Actualizar el stock de un producto")
+                            println("6. Mostrar el inventario")
+                            println("7. Filtrar productos por stock mínimo")
+                            println("8. Salir")
+
+                            val opcion = readLine()?.toIntOrNull()
+
+                            when (opcion) {
+                                1 -> {
+                                    println("Ingrese el nombre del producto:")
+                                    val nombre = readLine() ?: ""
+                                    println("Ingrese el precio del producto:")
+                                    val precio = readLine()?.toDoubleOrNull() ?: 0.0
+                                    println("Ingrese la categoría del producto:")
+                                    val categoria = readLine() ?: ""
+                                    println("Ingrese el stock del producto:")
+                                    val stock = readLine()?.toIntOrNull() ?: 0
+                                    inventario.agregarProducto(nombre, precio, categoria, stock)
+                                    println("Producto agregado correctamente.")
+                                }
+
+                                2 -> {
+                                    println("Ingrese el ID del producto a eliminar:")
+                                    val id = readLine()?.toIntOrNull() ?: 0
+                                    inventario.eliminarProducto(id)
+                                }
+
+                                3 -> {
+                                    println("Ingrese el ID del producto a buscar:")
+                                    val id = readLine()?.toIntOrNull() ?: 0
+                                    val producto = inventario.buscarProductoPorId(id)
+                                    if (producto == null) {
+                                        println("Producto no encontrado.")
+                                    } else {
+                                        println("Producto encontrado: ${producto.nombre} - Precio: ${producto.precio} - Categoría: ${producto.categoria} - Stock: ${producto.stock}")
+                                    }
+                                }
+
+                                4 -> {
+                                    println("Ingrese el nombre del producto a buscar:")
+                                    val nombre = readLine() ?: ""
+                                    val producto = inventario.buscarProductoPorNombre(nombre)
+                                    if (producto == null) {
+                                        println("Producto no encontrado.")
+                                    } else {
+                                        println("Producto encontrado: ${producto.nombre} - Precio: ${producto.precio} - Categoría: ${producto.categoria} - Stock: ${producto.stock}")
+                                    }
+                                }
+
+                                5 -> {
+                                    println("Ingrese el ID del producto a actualizar:")
+                                    val id = readLine()?.toIntOrNull() ?: 0
+                                    println("Ingrese la cantidad de stock a agregar (si desea restar, ingrese un número negativo):")
+                                    val cantidad = readLine()?.toIntOrNull() ?: 0
+                                    inventario.actualizarStock(id, cantidad)
+                                    println("Stock actualizado correctamente.")
+                                }
+
+                                6 -> {
+                                    inventario.mostrarInventario()
+                                }
+
+                                7 -> {
+                                    println("Ingrese el stock mínimo:")
+                                    val minStock = readLine()?.toInt() ?: 0
+                                    val productosFiltrados = inventario.filtrarPorStock(minStock)
+                                    if (productosFiltrados.isEmpty()) {
+                                        println("No se encontraron productos con un stock mínimo de $minStock unidades.")
+                                    } else {
+                                        println("Productos con un stock mínimo de $minStock unidades:")
+                                        productosFiltrados.forEach { producto ->
+                                            println(
+                                                "* SKU ${producto.id}: " +
+                                                        "Nombre: ${producto.nombre} " +
+                                                        "Precio: ${producto.precio} " +
+                                                        "Categoria: ${producto.categoria}" +
+                                                        "(${producto.stock} unidades)"
+                                            )
+                                        }
+                                    }
+                                }
+
+                                8 -> {
+                                    println("Hasta luego! " +
+                                            "Saliendo del Sistema del Inventario" +
+                                            "y entrando al Carrito de Compra")
+                                    verificacion = 2
+
+                                }
+                            }
+                        }
+                        if (verificacion == 2) {
+                            println("Bienvenido al Carrito de Compra")
+                            addToCar().agregaralCarro()
+                        }
                     }
                     2 -> {
                         //Agregar funcionalidad

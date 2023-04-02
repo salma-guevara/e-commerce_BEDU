@@ -1,4 +1,4 @@
-package user
+import user.*
 
 fun main(){
     val menu = WelcomeMenu()
